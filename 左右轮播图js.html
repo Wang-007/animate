@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* { margin: 0;padding: 0; }
+		ul, ol { list-style: none; }
+		img { display: block; }
+		.box {
+			position: relative;
+			width: 520px;
+			height: 280px;
+			margin: 100px auto;
+			border: 1px solid #ccc;
+			overflow: hidden;
+		}
+		ul {
+			width: 1000%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		li {
+			float: left;
+		}
+		.arr {
+			font: 700 16px/60px '宋体';
+			text-align: center;
+			color: #fff;
+			display: none;
+		}
+		.left,
+		.right {
+			position: absolute;
+			top: 50%;
+			margin-top: -30px;
+			width: 20px;
+			height: 60px;
+			background-color: rgba(0, 0, 0, .1);
+			cursor: pointer;
+		}
+		.left {
+			left: 0;
+		}
+		.right {
+			right: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		<ul>
+			<li><a href="#"><img src="images/1.jpg"></a></li>
+			<li><a href="#"><img src="images/2.jpg"></a></li>
+			<li><a href="#"><img src="images/3.jpg"></a></li>
+			<li><a href="#"><img src="images/4.jpg"></a></li>
+			<li><a href="#"><img src="images/5.jpg"></a></li>
+		</ul>
+		<div class="arr" id="arr">
+			<span class="left"><</span>
+			<span class="right">></span>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var box = document.getElementById('box');
+	var ul = box.children[0];
+	var lis = ul.children;
+	var arr = document.getElementById('arr');
+	var left = arr.children[0];
+	var right = arr.children[1];
+	var leader = 0, target = 0;
+	box.onmouseover = function() {
+		arr.style.display = 'block';
+	}
+	box.onmouseout = function() {
+		arr.style.display = 'none';
+	}
+	left.onmouseover = right.onmouseover = function() {
+		this.style.backgroundColor = 'rgba(0, 0, 0, .4)';
+	}
+	left.onmouseout = right.onmouseout = function() {
+		this.style.backgroundColor = 'rgba(0, 0, 0, .1)';
+	}
+	left.onclick = function() {
+		target += 520;
+	}
+	right.onclick = function() {
+		target -= 520;
+	}
+	setInterval(function() {
+		if (target >= 0) {
+			target = 0;
+		} else if (target <= -2080) {
+			target = -2080;
+		}
+		leader = leader + (target - leader)/10;
+		ul.style.left = leader + 'px';
+	}, 30);
+</script>

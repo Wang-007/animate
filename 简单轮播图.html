@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* { margin: 0; padding: 0; }
+		ul, ol { list-style: none; }
+		img { vertical-align: middle; }
+		.box {
+			width: 520px;
+			height: 280px;
+			margin: 100px auto;
+			border: 1px solid red;
+			position: relative;
+			overflow: hidden;
+		}
+		ul {
+			width: 1000%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		ul li, ol li {
+			float: left;
+		}
+		ol {
+			position: absolute;
+			left: 50%;
+			bottom: 10px;
+		}
+		ol li {
+			width: 20px;
+			height: 20px;
+			margin-left: 10px;
+			text-align: center;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			cursor: pointer;
+		}
+		.current {
+			background-color: orange;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		<ul>
+			<li><a href="#"><img src="images/1.jpg"></a></li>
+			<li><a href="#"><img src="images/2.jpg"></a></li>
+			<li><a href="#"><img src="images/3.jpg"></a></li>
+			<li><a href="#"><img src="images/4.jpg"></a></li>
+			<li><a href="#"><img src="images/5.jpg"></a></li>
+		</ul>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	function animate(obj, target, speed) {
+		clearInterval(obj.timer);
+		var step = obj.offsetLeft < target ? speed : -speed;
+		obj.timer = setInterval(function() {
+			var result = target - obj.offsetLeft;
+			obj.style.left = obj.offsetLeft + step + 'px';
+			if (Math.abs(result) <= speed) {
+				clearInterval(obj.timer);
+				obj.style.left = target + 'px';
+			}
+		}, 10);
+	}
+	var box = document.getElementById('box');
+	var ul = box.children[0];
+	ul.appendChild(ul.children[0].cloneNode(true));
+	var ulLis = ul.children;
+	var ol = document.createElement('ol');
+	box.appendChild(ol);
+	for (var i = 0, len = ulLis.length - 1; i < len; i++) {
+		var li = document.createElement('li');
+		ol.appendChild(li);
+		li.innerHTML = i + 1;
+	}
+	ol.style.marginLeft = -ol.offsetWidth / 2 + 'px';
+	var olLis = ol.children;
+	olLis[0].className = 'current';
+	for (var i = 0, len = olLis.length; i < len; i++) {
+		olLis[i].index = i;
+		olLis[i].onmouseover = function() {
+			for (var j = 0; j < len; j++) {
+				olLis[j].className = '';
+			}
+			this.className = 'current';
+			animate(ul, -this.index * ulLis[0].offsetWidth, 100);
+			num = square = this.index;
+		}
+	}
+	var num = 0, square = 0, timer = null;
+	timer = setInterval(autoPlay, 1000);
+	function autoPlay() {
+		num++;
+		if (num > olLis.length) {
+			ul.style.left = 0;
+			num = 1;
+		}
+		animate(ul, -num * ulLis[0].offsetWidth, 10);
+		square++;
+		if (square >= olLis.length) {
+			square = 0;
+		}
+		for (var i = 0, len = olLis.length; i < len; i++) {
+			olLis[i].className = '';
+		}
+		olLis[square].className = 'current';
+	}
+	box.onmouseover = function() {
+		clearInterval(timer);
+	}
+	box.onmouseout = function() {
+		timer = setInterval(autoPlay, 1000);
+	}
+</script>
