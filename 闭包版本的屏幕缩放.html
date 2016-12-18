@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="demo"></div>
+</body>
+</html>
+<script type="text/javascript">
+	// var num = 0;
+	// var demo = document.getElementById('demo');
+	// window.onresize = function(fn, delay) {
+	// 	var timer = null;
+	// 	return function() {
+	// 		clearTimeout(timer);
+	// 		timer = setTimeout(fn, delay);
+	// 	}
+	// }(function() {
+	// 	demo.innerHTML = window.innerWidth || document.documentElement.clientWidth;
+	// 	num++;
+	// 	console.log(num);
+	// }, 300);
+	// function(fn, delay) {
+	// 	var timer = null;
+	// 	return function() {
+	// 		clearTimeout(timer);
+	// 		timer = setTimeout(fn, delay);
+	// 	}
+	// }
+	var num = 0;
+	var demo = document.getElementById('demo');
+	window.onresize = function(fn, delay) {
+		var timer = null;
+		return function() {
+			clearTimeout(timer);
+			timer = setTimeout(fn,delay);
+		}
+	}(function() {
+		demo.innerHTML = window.innerWidth || document.documentElement.clientWidth;
+		num++;
+		console.log(num);
+	}, 300);
+</script>
