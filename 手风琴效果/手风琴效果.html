@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		* { margin: 0; padding: 0; }
+		img { vertical-align: middle; }
+		ul { list-style: none; }
+		.box {
+			width: 1150px;
+			height: 460px;
+			margin: 50px auto;
+			border: 1px solid red;
+			overflow: hidden;
+		}
+		ul {
+			width: 1400px;
+		}
+		li {
+			width: 240px;
+			float: left;
+			height: 460px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="animate.js"></script>
+<script type="text/javascript">
+	var box = document.getElementById('box');
+	var lis = box.children[0].children;
+	for(var i = 0, len = lis.length; i < len; i++){
+		lis[i].style.backgroundImage = 'url(imgs/'+ (i + 1) +'.jpg)';
+		lis[i].onmouseover = function() {
+			for(var j = 0; j < len; j++){
+				animate(lis[j], {width: 100});
+			}
+			animate(this, {width: 800});
+		}
+		lis[i].onmouseout = function() {
+			for(var i = 0; i < len; i++){
+				animate(lis[i], {width: 240})
+			}
+		}
+	}
+</script>
